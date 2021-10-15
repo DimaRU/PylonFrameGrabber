@@ -12,5 +12,6 @@ let package = Package(
     targets: [
         .target(name: "PylonFrameGrabber", dependencies: ["CPylon"]),
         .systemLibrary(name: "CPylon", pkgConfig: "pylon"),
-    ]
+    ],
+    cxxLanguageStandard: .cxx11
 )
