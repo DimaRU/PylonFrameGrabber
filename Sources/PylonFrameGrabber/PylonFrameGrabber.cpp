@@ -395,7 +395,7 @@ void CPylonSetSoftwareTrigger(PylonGrabber *frameGrabber,
         auto eventHandler = new CPylonImageEventHandler(object, grabCallback);
         camera->RegisterImageEventHandler( eventHandler, RegistrationMode_Append, Cleanup_Delete );
         camera->Open();
-        camera->StartGrabbing( GrabStrategy_LatestImages, GrabLoop_ProvidedByInstantCamera );
+        camera->StartGrabbing( GrabStrategy_OneByOne, GrabLoop_ProvidedByInstantCamera );
     }
     catch (const GenericException& e)
     {

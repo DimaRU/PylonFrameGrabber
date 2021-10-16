@@ -43,8 +43,8 @@ void FrameBufferAllocator::AllocateBuffer( size_t bufferSize, void** pCreatedBuf
 // Warning: This method can be called by different threads.
 void FrameBufferAllocator::FreeBuffer( void* pCreatedBuffer, intptr_t bufferContext )
 {
-    uint8_t* p = reinterpret_cast<uint8_t*>(pCreatedBuffer);
 }
+
 // Destroys the buffer factory.
 void FrameBufferAllocator::DestroyBufferFactory()
 {
