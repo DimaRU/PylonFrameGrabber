@@ -409,7 +409,7 @@ bool CPylonWaitForFrameTriggerReady(PylonGrabber *frameGrabber, int timeout) {
 
     try
     {
-        return camera->WaitForFrameTriggerReady( timeout, TimeoutHandling_ThrowException );
+        return camera->WaitForFrameTriggerReady( timeout, TimeoutHandling_Return );
     }
     catch (const GenericException& e)
     {
