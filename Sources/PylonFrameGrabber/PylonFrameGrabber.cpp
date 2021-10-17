@@ -219,6 +219,21 @@ void CPylonSetBoolParameter(PylonGrabber *frameGrabber, const char *name, bool v
     }
 }
 
+void CPylonCommandParameterExec(PylonGrabber *frameGrabber, const char *name)
+{
+    CInstantCamera *camera = (CInstantCamera *)frameGrabber->camera;
+    frameGrabber->errorFlag = false;
+    try
+    {
+        INodeMap& nodemap = camera->GetNodeMap();
+        CCommandParameter(nodemap, name).Execute();
+    }
+    catch (const GenericException& e)
+    {
+        storeString(frameGrabber, e.GetDescription());
+    }
+}
+
 void CPylonPrintParams(PylonGrabber *frameGrabber) {
     CInstantCamera *camera = (CInstantCamera *)frameGrabber->camera;
     frameGrabber->errorFlag = false;
