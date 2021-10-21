@@ -10,10 +10,11 @@
 
 using namespace Pylon;
 
-FrameBufferAllocator::FrameBufferAllocator(void * frameBuffer, size_t frameBufferSize)
+FrameBufferAllocator::FrameBufferAllocator(void * frameBuffer, size_t frameBufferSize, int bufferCount)
 {
     this->frameBuffer = frameBuffer;
     this->frameBufferSize = frameBufferSize;
+    this->bufferCount = bufferCount;
     this->context = 0;
 }
 
@@ -25,18 +26,15 @@ FrameBufferAllocator::~FrameBufferAllocator()
 // Warning: This method can be called by different threads.
 void FrameBufferAllocator::AllocateBuffer( size_t bufferSize, void** pCreatedBuffer, intptr_t& bufferContext )
 {
-    size_t *frameBufferOffset = (size_t *)frameBuffer;
+    if ( bufferSize != frameBufferSize || context >= bufferCount ) {
+        *pCreatedBuffer = NULL;
+    }
     // Allocate buffer for pixel data.
-    *pCreatedBuffer = (uint8_t *)frameBuffer + frameBufferOffset[context];
+    *pCreatedBuffer = (uint8_t *)frameBuffer + bufferSize * context;
     // The context information is never changed by the Instant Camera and can be used
     // by the buffer factory to manage the buffers.
     // The context information can be retrieved from a grab result by calling
-    bufferContext = context;
-    context++;
-    frameBufferOffset[context] = frameBufferOffset[context - 1] + bufferSize;
-    if ( frameBufferOffset[context] > frameBufferSize) {
-        *pCreatedBuffer = NULL;
-    }
+    bufferContext = context++;
 }
 
 // Frees a previously allocated buffer.

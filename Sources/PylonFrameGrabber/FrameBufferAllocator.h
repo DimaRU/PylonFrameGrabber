@@ -11,7 +11,7 @@
 class FrameBufferAllocator : public Pylon::IBufferFactory
 {
 public:
-    FrameBufferAllocator(void * frameBuffer, size_t frameBufferSize);
+    FrameBufferAllocator(void * frameBuffer, size_t frameBufferSize, int bufferCount);
     virtual ~FrameBufferAllocator();
     virtual void AllocateBuffer( size_t bufferSize, void** pCreatedBuffer, intptr_t& bufferContext );
     virtual void FreeBuffer( void* pCreatedBuffer, intptr_t bufferContext );
@@ -20,5 +20,6 @@ public:
 protected:
     void *  frameBuffer;
     size_t  frameBufferSize;
+    int     bufferCount;
     int     context;
 };

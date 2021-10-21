@@ -393,7 +393,7 @@ bool CPylonIsGrabbing(PylonGrabber  * _Nonnull frameGrabber) {
 
 void CPylonSetBufferAllocator(PylonGrabber * _Nonnull frameGrabber, void * frameBuffer, size_t frameBufferSize, int bufferCount) {
     CInstantCamera *camera = (CInstantCamera *)frameGrabber->camera;
-    FrameBufferAllocator * allocator = new FrameBufferAllocator(frameBuffer, frameBufferSize);
+    FrameBufferAllocator * allocator = new FrameBufferAllocator(frameBuffer, frameBufferSize, bufferCount);
     camera->SetBufferFactory(allocator);
     camera->MaxNumBuffer = bufferCount;
 }
