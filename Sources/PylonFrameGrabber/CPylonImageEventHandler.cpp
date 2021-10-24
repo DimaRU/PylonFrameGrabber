@@ -19,6 +19,7 @@ CPylonImageEventHandler::CPylonImageEventHandler(const void * object, GrabCallba
 void CPylonImageEventHandler::OnImagesSkipped( CInstantCamera& camera, size_t countOfSkippedImages )
 {
     grabCallback(object, 0, 0, nullptr, countOfSkippedImages);
+    std::cerr << "Skipped frames: " << countOfSkippedImages << std::endl;
 }
 
 void CPylonImageEventHandler::OnImageGrabbed( CInstantCamera& camera, const CGrabResultPtr& ptrGrabResult )
@@ -26,7 +27,7 @@ void CPylonImageEventHandler::OnImageGrabbed( CInstantCamera& camera, const CGra
     if (!ptrGrabResult->GrabSucceeded())
     {
         grabCallback(object, 1, 0, nullptr, ptrGrabResult->GetErrorCode());
-        std::cerr << "Error: " << std::hex << ptrGrabResult->GetErrorCode() << std::dec << " " << ptrGrabResult->GetErrorDescription() << std::endl;
+        std::cerr << "Error: " << std::hex << ptrGrabResult->GetErrorCode() << std::dec << std::endl;
         return;
     }
     int width = ptrGrabResult->GetWidth();
