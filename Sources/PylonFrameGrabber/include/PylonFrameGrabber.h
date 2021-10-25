@@ -103,13 +103,17 @@ void CPylonSetBufferAllocator(PylonGrabber * _Nonnull frameGrabber,
                               void * frameBuffer,
                               size_t frameBufferSize,
                               int bufferCount) CF_SWIFT_NAME(PylonGrabber.setBufferAllocator(self:frameBuffer:frameBufferSize:bufferCount:));
-void CPylonSetSoftwareTrigger(PylonGrabber *frameGrabber,
-                              const void * _Nonnull object,
-                              GrabCallback _Nonnull grabCallback) CF_SWIFT_NAME(PylonGrabber.setSoftwareTrigger(self:object:callBack:));
 bool CPylonWaitForFrameTriggerReady(PylonGrabber *frameGrabber, int timeout) CF_SWIFT_NAME(PylonGrabber.waitForFrameTriggerReady(self:timeout:));
 void CPylonSetEventCallback(PylonGrabber * _Nonnull frameGrabber,
                             const void * _Nonnull object,
-                            EventCallback _Nullable eventCallback) CF_SWIFT_NAME(PylonGrabber.setEventCallback(self:object:callBack:));
+                            EventCallback _Nullable eventCallback) CF_SWIFT_NAME(PylonGrabber.setEventCallback(self:object:eventCallback:));
+
+void CPylonStartSoftwareTriggeredGrab(PylonGrabber *frameGrabber) CF_SWIFT_NAME(PylonGrabber.startSoftwareTriggeredGrab(self:));
+
+void CPylonSetSoftwareTriggerCallBack(PylonGrabber *frameGrabber,
+                                      const void * _Nonnull object,
+                                      GrabCallback _Nonnull grabCallback,
+                                      EventCallback _Nullable eventCallback) CF_SWIFT_NAME(PylonGrabber.setSoftwareTrigger(self:object:grabCallback:eventCallBack:));
 
 #ifdef __cplusplus
 }

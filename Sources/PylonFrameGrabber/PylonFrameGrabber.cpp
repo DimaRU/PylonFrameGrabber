@@ -398,17 +398,12 @@ void CPylonSetBufferAllocator(PylonGrabber * _Nonnull frameGrabber, void * frame
     camera->MaxNumBuffer = bufferCount;
 }
 
-void CPylonSetSoftwareTrigger(PylonGrabber *frameGrabber,
-                              const void * _Nonnull object,
-                              GrabCallback _Nonnull grabCallback) {
+void CPylonStartSoftwareTriggeredGrab(PylonGrabber *frameGrabber) {
     CInstantCamera *camera = (CInstantCamera *)frameGrabber->camera;
     frameGrabber->errorFlag = false;
 
     try
     {
-        camera->RegisterConfiguration( new CSoftwareTriggerConfiguration, RegistrationMode_Append, Cleanup_Delete );
-        auto eventHandler = new CPylonImageEventHandler(object, grabCallback);
-        camera->RegisterImageEventHandler( eventHandler, RegistrationMode_Append, Cleanup_Delete );
         camera->Open();
         camera->StartGrabbing( GrabStrategy_OneByOne, GrabLoop_ProvidedByInstantCamera );
     }
@@ -440,5 +435,26 @@ void CPylonSetEventCallback(PylonGrabber * _Nonnull frameGrabber,
 	frameGrabber->errorFlag = false;
 
 	auto eventHandler = new CPylonConfigurationEventHandler(object, eventCallback);
-	camera->RegisterConfiguration( eventHandler, RegistrationMode_ReplaceAll, Cleanup_Delete );
+	camera->RegisterConfiguration( eventHandler, RegistrationMode_Append, Cleanup_Delete );
+}
+
+void CPylonSetSoftwareTriggerCallBack(PylonGrabber *frameGrabber,
+                              const void * _Nonnull object,
+                              GrabCallback _Nonnull grabCallback,
+                              EventCallback _Nullable eventCallback) {
+    CInstantCamera *camera = (CInstantCamera *)frameGrabber->camera;
+    frameGrabber->errorFlag = false;
+
+    try
+    {
+        camera->RegisterConfiguration( new CSoftwareTriggerConfiguration, RegistrationMode_ReplaceAll, Cleanup_Delete );
+        auto configEventHandler = new CPylonConfigurationEventHandler(object, eventCallback);
+        camera->RegisterConfiguration( configEventHandler, RegistrationMode_Append, Cleanup_Delete );
+        auto imageEventHandler = new CPylonImageEventHandler(object, grabCallback);
+        camera->RegisterImageEventHandler( imageEventHandler, RegistrationMode_Append, Cleanup_Delete );
+    }
+    catch (const GenericException& e)
+    {
+        storeString(frameGrabber, e.GetDescription());
+    }
 }
