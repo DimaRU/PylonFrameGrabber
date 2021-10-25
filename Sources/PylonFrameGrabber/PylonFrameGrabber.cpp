@@ -404,7 +404,6 @@ void CPylonStartSoftwareTriggeredGrab(PylonGrabber *frameGrabber) {
 
     try
     {
-        camera->Open();
         camera->StartGrabbing( GrabStrategy_OneByOne, GrabLoop_ProvidedByInstantCamera );
     }
     catch (const GenericException& e)
