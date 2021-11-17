@@ -327,6 +327,8 @@ void CPylonSetAOI(PylonGrabber *frameGrabber, Area area) {
 
     try {
         INodeMap& nodemap = camera->GetNodeMap();
+        CIntegerParameter( nodemap, "OffsetX" ).SetValue(0);
+        CIntegerParameter( nodemap, "OffsetY" ).SetValue(0);
         CIntegerParameter( nodemap, "Width" ).SetValue(area.width);
         CIntegerParameter( nodemap, "Height" ).SetValue(area.height);
         CIntegerParameter( nodemap, "OffsetX" ).SetValue(area.offsetX);
@@ -344,6 +346,8 @@ void CPylonSetAutoAOI(PylonGrabber *frameGrabber, Area area) {
     try {
         INodeMap& nodemap = camera->GetNodeMap();
         CEnumParameter(nodemap, "AutoFunctionAOISelector").SetValue("AOI1");
+        CIntegerParameter( nodemap, "AutoFunctionAOIOffsetX" ).SetValue(0);
+        CIntegerParameter( nodemap, "AutoFunctionAOIOffsetY" ).SetValue(0);
         CIntegerParameter( nodemap, "AutoFunctionAOIWidth" ).SetValue(area.width);
         CIntegerParameter( nodemap, "AutoFunctionAOIHeight" ).SetValue(area.height);
         CIntegerParameter( nodemap, "AutoFunctionAOIOffsetX" ).SetValue(area.offsetX);
