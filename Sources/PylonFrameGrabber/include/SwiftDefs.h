@@ -17,6 +17,7 @@
 #endif
 
 #ifndef NS_ENUM
+#pragma clang diagnostic ignored "-Welaborated-enum-base"
 #define NS_ENUM(_type, _name) enum OPEN_ENUM_ATTR _name : _type _name; enum OPEN_ENUM_ATTR _name : _type
 #endif
 #ifndef NS_CLOSED_ENUM
